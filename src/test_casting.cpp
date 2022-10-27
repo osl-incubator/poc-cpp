@@ -5,14 +5,14 @@
 #include "expr.h"
 #include "utils.h"
 
-#define DOWNCASTING_PTR_EXPR(expr, func)                       \
+#define DOWNCASTING_PTR_EXPR(expr, func)                   \
   ({                                                       \
     switch (expr->kind) {                                  \
       case ExprKind::IntKind: {                            \
         func((IntExpr*) (expr));                           \
         break;                                             \
       }                                                    \
-      case ExprKind::FloatKind: {                            \
+      case ExprKind::FloatKind: {                          \
         func((FloatExpr*) (expr));                         \
         break;                                             \
       }                                                    \
@@ -32,8 +32,6 @@ void test_downcasting_manually() {
 
   assert((expr->kind == ExprKind::FloatKind));
 }
-
-
 
 void test_downcasting_macro() {
   // upcasting

@@ -1,17 +1,16 @@
 #include <iostream>
 
-using std::cout;
-
-// signatures
-void test_unique_ptr();
+// forward declarations
+void test_macros();
 void test_casting();
 void test_types();
-
+void test_unique_ptr();
 
 int main() {
-    test_unique_ptr();
-    test_casting();
-    test_types();
-    cout << std::endl << "[II] Done!" << std::endl;
-    return 0;
+  test_casting();
+  test_unique_ptr();
+  test_macros();
+  test_types();
+  std::cout << std::endl << "[II] Done!" << std::endl;
+  return 0;
 }

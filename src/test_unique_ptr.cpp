@@ -1,8 +1,25 @@
+#include <cassert>
 #include <iostream>
 #include <memory>
 
 #include "expr.h"
 #include "utils.h"
+
+// https://www.tutorialspoint.com/cplusplus-equivalent-of-instanceof
+template<typename Base, typename T>
+inline bool instanceof(const T *ptr) {
+   return dynamic_cast<const Base*>(ptr) != nullptr;
+}
+
+template <typename T>
+bool is_expr_ptr(T* ptr) {
+    return std::is_base_of<BaseExpr, T>::value;
+}
+
+template <typename T>
+bool is_expr_ptr(std::unique_ptr<T> const& ptr) {
+    return false;
+}
 
 
 // test functions
@@ -39,8 +56,27 @@ void test_unique_ptr_dispatch() {
   print_ref(expr_all);
 }
 
+
+void test_if_is_unique_ptr(){
+  auto expr_1 = std::make_unique<IntExpr>(1);
+  auto expr_2 = std::make_unique<FloatExpr>(1.5);
+  auto expr_3 = new IntExpr(2);
+  auto expr_4 = new FloatExpr(2.5);
+  auto expr_5 = expr_1.get();
+  auto expr_6 = expr_2.get();
+
+  assert((is_expr_ptr(expr_1) == false));
+  assert((is_expr_ptr(expr_2) == false));
+  assert((is_expr_ptr(expr_3)));
+  assert((is_expr_ptr(expr_4)));
+  assert((is_expr_ptr(expr_5)));
+  assert((is_expr_ptr(expr_6)));
+
+}
+
 void test_unique_ptr() {
   print_test_header("test_unique_ptr");
   test_unique_ptr_dispatch();
+  test_if_is_unique_ptr();
   print_test_footer("test_unique_ptr");
 }

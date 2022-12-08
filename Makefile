@@ -43,3 +43,8 @@ install:
 .PHONY: run-tests
 run-tests:
 	./build/poccpp
+
+
+.ONESHELL:
+.PHONY: all
+all: build run-tests

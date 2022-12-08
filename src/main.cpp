@@ -5,12 +5,15 @@ void test_macros();
 void test_casting();
 void test_types();
 void test_unique_ptr();
+void test_template();
 
 int main() {
   test_casting();
   test_unique_ptr();
   test_macros();
+  test_template();
   test_types();
+
   std::cout << std::endl << "[II] Done!" << std::endl;
   return 0;
 }

@@ -19,9 +19,9 @@ project_src_files = files(
   PROJECT_PATH + '/src/expr.cpp',
   PROJECT_PATH + '/src/test_casting.cpp',
   PROJECT_PATH + '/src/test_macros.cpp',
-  PROJECT_PATH + '/src/test_unique_ptr.cpp',
   PROJECT_PATH + '/src/test_template.cpp',
   PROJECT_PATH + '/src/test_types.cpp',
+  PROJECT_PATH + '/src/test_unique_ptr.cpp',
   PROJECT_PATH + '/src/utils.cpp',
 )
 

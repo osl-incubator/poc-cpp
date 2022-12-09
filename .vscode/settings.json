@@ -8,5 +8,6 @@
     "functional": "cpp",
     "tuple": "cpp",
     "utility": "cpp"
-  }
+  },
+  "workbench.colorTheme": "Abyss"
 }

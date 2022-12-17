@@ -1,41 +1,8 @@
 #include <memory>
 #include "expr.h"
+#include "result.h"
 #include "utils.h"
 
-class Result {
- public:
-  std::string result_name;
-
-  virtual void set_value(std::string result_name) = 0;
-
-  Result(std::string result_name) {
-    this->result_name = "ResultValue: " + result_name;
-  }
-
-  std::string get_name() {
-    return this->result_name;
-  }
-};
-
-class ResultValue : public Result {
- public:
-  ResultValue(std::string result_name)
-      : Result("ResultValue: " + result_name) {}
-
-  virtual void set_value(std::string result_name) {
-    this->result_name = "ResultValue: " + result_name;
-  }
-};
-
-class ResultFunction : public Result {
- public:
-  ResultFunction(std::string result_name)
-      : Result("ResultFunction: " + result_name) {}
-
-  virtual void set_value(std::string result_name) {
-    this->result_name = "ResultFunction: " + result_name;
-  }
-};
 
 template <typename T>
 T codegen(FloatExpr* expr, T result) {

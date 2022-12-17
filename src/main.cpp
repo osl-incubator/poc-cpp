@@ -6,6 +6,7 @@ void test_casting();
 void test_types();
 void test_unique_ptr();
 void test_template();
+void test_visitor();
 
 int main() {
   test_casting();

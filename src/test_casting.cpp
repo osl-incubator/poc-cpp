@@ -31,6 +31,10 @@ void test_downcasting_manually() {
   FloatExpr* expr = static_cast<FloatExpr*>(base_expr);
 
   assert((expr->kind == ExprKind::FloatKind));
+
+  // teardown
+  delete expr;
+  base_expr = nullptr;
 }
 
 void test_downcasting_macro() {
@@ -39,6 +43,9 @@ void test_downcasting_macro() {
 
   // downcasting
   DOWNCASTING_PTR_EXPR(base_expr, print_ptr);
+
+  // teardown
+  delete (FloatExpr*) base_expr;
 }
 
 void test_casting() {

@@ -6,6 +6,8 @@ enum class ExprKind { FloatKind = 0, IntKind = 1, AllKind = 2 };
 class BaseExpr {
  public:
   ExprKind kind;
+
+  virtual ~BaseExpr() = default;
 };
 
 class IntExpr : public BaseExpr {
@@ -35,19 +37,25 @@ class AllExpr : public BaseExpr {
   std::unique_ptr<BaseExpr> expr_generic;
 
   AllExpr(
-      std::unique_ptr<IntExpr> expr_int,
-      std::unique_ptr<FloatExpr> expr_float,
-      std::unique_ptr<BaseExpr> expr_generic) {
+    std::unique_ptr<IntExpr> expr_int,
+    std::unique_ptr<FloatExpr> expr_float,
+    std::unique_ptr<BaseExpr> expr_generic
+  ) :
+    expr_int(std::move(expr_int)),
+    expr_float(std::move(expr_float)),
+    expr_generic(std::move(expr_generic))
+  {
     this->kind = ExprKind::AllKind;
-    this->expr_int = std::move(expr_int);
-    this->expr_float = std::move(expr_float);
-    this->expr_generic = std::move(expr_generic);
   }
+
+  AllExpr(const AllExpr&) = delete;
+  AllExpr& operator=(const AllExpr&) = delete;
+
 };
 
 void print_ptr(IntExpr* expr);
 void print_ptr(FloatExpr* expr);
 void print_ptr(AllExpr* expr);
-void print_ref(std::unique_ptr<IntExpr>& expr);
-void print_ref(std::unique_ptr<FloatExpr>& expr);
-void print_ref(std::unique_ptr<AllExpr>& expr);
+void print_ref(IntExpr& expr);
+void print_ref(FloatExpr& expr);
+void print_ref(AllExpr& expr);

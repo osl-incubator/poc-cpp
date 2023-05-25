@@ -7,9 +7,9 @@ class BaseExprV {
  public:
   ExprKindV kind;
 
-  template <typename V, typename T>
-  T* visit(V* visitor, T* output) {
-    return visitor->visit(this, output);
+  template <typename V>
+  auto accept(V* visitor) -> void {
+    visitor->visit(this);
   }
 };
 
@@ -22,11 +22,6 @@ class IntExprV : public BaseExprV {
     this->value = value;
   }
 
-  template <typename V, typename T>
-  T* visit(V* visitor, T* output) {
-    return visitor->visit(this, output);
-  }
-
 };
 
 class FloatExprV : public BaseExprV {
@@ -36,11 +31,6 @@ class FloatExprV : public BaseExprV {
   FloatExprV(float value) {
     this->kind = ExprKindV::FloatKind;
     this->value = value;
-  }
-
-  template <typename V, typename T>
-  T* visit(V* visitor, T* output) {
-    return visitor->visit(this, output);
   }
 
 };

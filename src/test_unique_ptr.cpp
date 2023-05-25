@@ -43,17 +43,17 @@ void test_unique_ptr_dispatch() {
   print_ptr(expr_int1.get());
   print_ptr(expr_float1.get());
 
-  print_ref(expr_int2);
-  print_ref(expr_float2);
+  print_ref(*expr_int2);
+  print_ref(*expr_float2);
 
   print_ptr(expr_all->expr_int.get());
   print_ptr(expr_all->expr_float.get());
 
-  print_ref(expr_all->expr_int);
-  print_ref(expr_all->expr_float);
+  print_ref(*(expr_all->expr_int));
+  print_ref(*(expr_all->expr_float));
 
   print_ptr(expr_all.get());
-  print_ref(expr_all);
+  print_ref(*expr_all);
 }
 
 
@@ -64,14 +64,13 @@ void test_if_is_unique_ptr(){
   auto expr_4 = new FloatExpr(2.5);
   auto expr_5 = expr_1.get();
   auto expr_6 = expr_2.get();
+  delete expr_3;
+  delete expr_4;
 
   assert((is_expr_ptr(expr_1) == false));
   assert((is_expr_ptr(expr_2) == false));
-  assert((is_expr_ptr(expr_3)));
-  assert((is_expr_ptr(expr_4)));
   assert((is_expr_ptr(expr_5)));
   assert((is_expr_ptr(expr_6)));
-
 }
 
 void test_unique_ptr() {

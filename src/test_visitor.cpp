@@ -7,39 +7,40 @@
 
 class PrintVisitor {
 public:
-  template <typename T>
-  T* visit(BaseExprV* expr, T* output);
+  std::unique_ptr<ResultFunction> result_function;
+  std::unique_ptr<ResultValue> result_value;
 
-  template <typename T>
-  T* visit(IntExprV* expr, T* output);
-
-  template <typename T>
-  T* visit(FloatExprV* expr, T* output);
+  auto visit(BaseExprV* expr) -> void;
+  auto visit(IntExprV* expr) -> void;
+  auto visit(FloatExprV* expr) -> void;
 };
 
-template <typename T>
-T* PrintVisitor::visit(BaseExprV* expr, T* output) {
-  return output;
+auto PrintVisitor::visit(BaseExprV* expr) -> void {
+  this->result_function = std::make_unique<ResultFunction>("Base");
 }
 
-template <typename T>
-T* PrintVisitor::visit(IntExprV* expr, T* output) {
-  return output;
+auto PrintVisitor::visit(IntExprV* expr) -> void {
+  this->result_value = std::make_unique<ResultValue>("Int");
 }
 
-template <typename T>
-T* PrintVisitor::visit(FloatExprV* expr, T* output) {
-  return output;
+auto PrintVisitor::visit(FloatExprV* expr) -> void {
+  this->result_value = std::make_unique<ResultValue>("Float");
 }
 
 void test_visitor_expr() {
   auto visitor = new PrintVisitor();
   auto f_expr = new FloatExprV(1.2);
   auto result_function = new ResultFunction("res1");
-  auto result_value = new ResultValue("res2");
+  auto resval1 = new ResultValue("resval1");
+  auto resval12 = new ResultValue("resval2");
 
-  f_expr->visit(visitor, result_function);
-  f_expr->visit(visitor, result_value);
+  f_expr->accept(visitor);
+
+  delete visitor;
+  delete f_expr;
+  delete result_function;
+  delete resval1;
+  delete resval12;
 }
 
 void test_visitor() {

@@ -45,6 +45,11 @@ void test_template_function() {
   codegen(expr_float, result_value);
   codegen(expr_int, result_function);
   codegen(expr_int, result_value);
+
+  delete expr_float;
+  delete expr_int;
+  delete result_function;
+  delete result_value;
 }
 
 void test_template() {

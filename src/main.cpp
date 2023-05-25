@@ -1,12 +1,13 @@
 #include <iostream>
 
 // forward declarations
-void test_macros();
-void test_casting();
-void test_types();
-void test_unique_ptr();
-void test_template();
-void test_visitor();
+auto test_macros() -> void;
+auto test_casting() -> void;
+auto test_types() -> void;
+auto test_unique_ptr() -> void;
+auto test_template() -> void;
+auto test_visitor() -> void;
+auto test_memory_leak() -> void;
 
 int main() {
   test_casting();
@@ -14,6 +15,7 @@ int main() {
   test_template();
   test_types();
   test_unique_ptr();
+  test_memory_leak();
 
   std::cout << std::endl << "[II] Done!" << std::endl;
   return 0;

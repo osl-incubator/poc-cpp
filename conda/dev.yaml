@@ -12,3 +12,6 @@ dependencies:
 - meson
 - ninja
 - pkg-config
+- pip
+- pip:
+  - makim==1.8.1

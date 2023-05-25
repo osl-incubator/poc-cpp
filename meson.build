@@ -23,6 +23,7 @@ project_src_files = files(
   PROJECT_PATH + '/src/test_types.cpp',
   PROJECT_PATH + '/src/test_unique_ptr.cpp',
   PROJECT_PATH + '/src/test_visitor.cpp',
+  PROJECT_PATH + '/src/test_memory_leak.cpp',
   PROJECT_PATH + '/src/utils.cpp',
 )
 

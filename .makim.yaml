@@ -1,0 +1,80 @@
+version: "1.0"
+shell: bash
+env:
+  CFLAGS_EXTRA: "\
+    -fsanitize-address-use-after-scope\
+    "
+  # use it for ASAN and LSAN
+  SAN_OPTIONS_DEFAULT: "\
+    fast_unwind_on_malloc=0\
+    :verbosity=1\
+    :log_threads=1\
+    :debug=true\
+    :sleep_before_dying=10\
+    :print_stats=1\
+    :strict_string_checks=1\
+    :detect_stack_use_after_return=1\
+    :check_initialization_order=1\
+    :strict_init_order=1\
+    :atexit=1\
+    :print_legend=1\
+    :detect_leaks=1\
+    "
+  MESON_EXTRA: "-Db_coverage=true \
+    -Doptimization=0 \
+    -Db_sanitize=address \
+    "
+groups:
+  poc-cpp:
+    targets:
+      clean:
+        run: |
+          rm -rf build/*
+          rm -f bin/*
+          mkdir -p build
+
+      build:
+        help: build sources
+        dependencies:
+          - target: poc-cpp.clean
+            if: {{ args.clean }}
+        args:
+          build-type:
+            help: "Specify the build type: 'plain', 'debug', 'debugoptimized', 'release', 'minsize', 'custom'"
+            type: string
+            default: release
+          meson-extra:
+            help: meson extra arguments
+            type: string
+            default: ""
+          clean:
+            help: "Clean build files"
+            type: "bool"
+            action: "store-true"
+        run: |
+            set -ex
+            meson setup \
+              --prefix ${CONDA_PREFIX} \
+              --libdir ${CONDA_PREFIX}/lib \
+              --includedir ${CONDA_PREFIX}/include \
+              --buildtype={{ args.build_type }} \
+              --native-file meson.native {{ args.meson_extra or env.MESON_EXTRA }} \
+              build .
+            meson compile -C build
+
+      install:
+        help: install the program
+        run: meson install -C build
+
+      run-tests:
+        help: run tests
+        env:
+          ASAN_OPTIONS_DEFAULT: {{ env.SAN_OPTIONS_DEFAULT }}
+          LSAN_OPTIONS_DEFAULT: {{ env.SAN_OPTIONS_DEFAULT }}
+        run: ./build/poccpp
+
+      all:
+        help: run build and tests
+        dependencies:
+          - target: poc-cpp.build
+          - target: poc-cpp.run-tests
